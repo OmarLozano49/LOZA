@@ -1,0 +1,67 @@
+:root{
+  /* Brand base — from LOZA Consulting brand guide + logo mark */
+  --navy:#0A2140;       /* primary — headline color, dominant ground */
+  --gold:#AF8959;       /* logo accent — premium, restrained, use for dividers/quiet emphasis */
+  --orange:#E0692A;     /* action accent — CTAs, links, proof-point highlights */
+  --cream:#F7F4EE;      /* warm off-white surface, pairs with navy/gold */
+  --white:#FFFFFF;
+
+  /* Navy ramp (tints toward cream, shades toward black) */
+  --navy-50: color-mix(in oklch, var(--navy) 6%, var(--white));
+  --navy-100:color-mix(in oklch, var(--navy) 12%, var(--white));
+  --navy-200:color-mix(in oklch, var(--navy) 24%, var(--white));
+  --navy-300:color-mix(in oklch, var(--navy) 40%, var(--white));
+  --navy-400:color-mix(in oklch, var(--navy) 60%, var(--white));
+  --navy-500:color-mix(in oklch, var(--navy) 80%, var(--white));
+  --navy-600:var(--navy);
+  --navy-700:color-mix(in oklch, var(--navy) 88%, black);
+  --navy-800:color-mix(in oklch, var(--navy) 72%, black);
+  --navy-900:color-mix(in oklch, var(--navy) 55%, black);
+
+  /* Gold ramp */
+  --gold-100:color-mix(in oklch, var(--gold) 18%, var(--white));
+  --gold-300:color-mix(in oklch, var(--gold) 50%, var(--white));
+  --gold-500:var(--gold);
+  --gold-700:color-mix(in oklch, var(--gold) 78%, black);
+
+  /* Orange ramp */
+  --orange-100:color-mix(in oklch, var(--orange) 15%, var(--white));
+  --orange-300:color-mix(in oklch, var(--orange) 45%, var(--white));
+  --orange-500:var(--orange);
+  --orange-600:color-mix(in oklch, var(--orange) 88%, black);
+  --orange-700:color-mix(in oklch, var(--orange) 75%, black);
+
+  /* Neutrals — cool grey tied to navy hue, for body text / borders on white grounds */
+  --grey-50:#F7F8F9;
+  --grey-100:#EDEFF2;
+  --grey-200:#DDE1E6;
+  --grey-300:#C3C9D1;
+  --grey-400:#98A1AD;
+  --grey-500:#6E7889;
+  --grey-600:#4E5768;
+  --grey-700:#37404F;
+
+  /* Semantic aliases */
+  --surface-page:var(--white);
+  --surface-warm:var(--cream);
+  --surface-card:var(--white);
+  --surface-inverse:var(--navy);
+  --surface-inverse-elevated:var(--navy-700);
+
+  --text-primary:var(--navy-900);
+  --text-secondary:var(--grey-600);
+  --text-muted:var(--grey-500);
+  --text-on-inverse:var(--white);
+  --text-on-inverse-muted:var(--navy-200);
+  --text-link:var(--orange-600);
+  --text-link-hover:var(--orange-700);
+
+  --border-subtle:var(--grey-200);
+  --border-default:var(--grey-300);
+  --border-inverse:color-mix(in oklch, var(--white) 20%, transparent);
+
+  --accent-primary:var(--orange-500);       /* CTAs, links, active states */
+  --accent-primary-hover:var(--orange-600);
+  --accent-quiet:var(--gold-500);           /* dividers, credential marks, quiet emphasis */
+  --focus-ring:var(--orange-500);
+}
