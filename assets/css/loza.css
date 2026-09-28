@@ -147,13 +147,19 @@ footer img{height:36px}
   .about-grid,.contact-grid{grid-template-columns:1fr}
   section{padding:72px 0}
 }
+@media (max-width:768px){
+  .nav-right .btn-outline{display:none}
+  .lang-switch{display:flex;align-items:center;gap:4px;white-space:nowrap}
+  .logo-link img{height:40px !important}
+  .nav-row{height:56px}
+  .hero{padding:28px 0 48px}
+  .hero-grid{gap:18px}
+}
 @media (max-width:600px){
   .container{padding:0 18px}
-  .hero{padding:64px 0}
   section{padding:56px 0}
-  .btn{width:100%}
+  .btn{width:100%;min-height:48px}
   .hero-ctas{flex-direction:column}
-  .nav-row{height:64px}
   .footer-bottom{flex-direction:column}
 }
 
