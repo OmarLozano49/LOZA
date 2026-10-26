@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autodiagnóstico de análisis de planta | LOZA Consulting</title>
+<meta name="description" content="10 preguntas, menos de 4 minutos, resultado privado. Mide cómo llegas a la causa de tus problemas de planta, qué tan confiables son tus datos y qué papel juega la IA.">
+<link rel="canonical" href="https://www.lozaconsulting.com/autodiagnostico/">
+<meta name="theme-color" content="#0A2140">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_HN">
+<meta property="og:site_name" content="LOZA Consulting">
+<meta property="og:title" content="Autodiagnóstico: ¿qué tan listo está tu análisis de planta?">
+<meta property="og:description" content="10 preguntas, menos de 4 minutos, resultado privado. Mide cómo llegas a la causa de tus problemas, qué tan confiables son tus datos y qué papel juega la IA.">
+<meta property="og:url" content="https://www.lozaconsulting.com/autodiagnostico/">
+<meta property="og:image" content="https://www.lozaconsulting.com/autodiagnostico/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* Mundo único LOZA: azul marino de fondo, tarjetas claras, naranja solo en acción y cifras. Una columna de 640px. */
+:root {
+  --navy: #0A2140;
+  --navy-2: #123560;
+  --orange: #E0692A;
+  --paper: #F4F6F9;
+  --ink: #0A2140;
+  --muted: #55657C;
+  --line: #D3DAE4;
+  --soft: #B7C3D6;
+  --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+.wrap { max-width: 640px; margin: 0 auto; padding: 24px 16px 48px; }
+.brand { font-family: var(--display); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; font-size: 14px; color: var(--soft); display: flex; justify-content: space-between; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid var(--navy-2); margin-bottom: 28px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.02; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(44px, 11vw, 68px); text-transform: uppercase; }
+h2 { font-size: clamp(30px, 7vw, 40px); }
+h3 { font-size: 22px; letter-spacing: .02em; text-transform: uppercase; }
+p { margin: 0; }
+.lead { color: var(--soft); margin-top: 18px; max-width: 56ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 8px; padding: 0; list-style: none; }
+.facts li { background: var(--navy-2); padding: 8px 14px; font-family: var(--display); font-weight: 600; font-size: 18px; letter-spacing: .06em; text-transform: uppercase; }
+.privacy { color: var(--soft); font-size: 15px; margin-top: 14px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 12px 26px; border: 0; border-radius: 4px; background: var(--orange); color: var(--navy); font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; cursor: pointer; }
+.btn:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: #fff; border: 2px solid var(--soft); }
+.btn.block { display: flex; width: 100%; }
+.start { margin-top: 30px; }
+:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.sign { color: var(--soft); font-size: 15px; margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--navy-2); }
+
+/* Pregunta */
+.progress { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-family: var(--display); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: 17px; color: var(--soft); }
+.progress b { color: #fff; font-weight: 700; }
+.bar { height: 6px; background: var(--navy-2); margin: 10px 0 32px; }
+.bar i { display: block; height: 100%; background: var(--orange); transition: width .25s ease; }
+.q { font-family: var(--body); font-weight: 600; font-size: clamp(23px, 5.4vw, 28px); line-height: 1.22; margin: 0 0 24px; text-wrap: balance; }
+.opts { display: grid; gap: 12px; }
+.opt { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; min-height: 60px; padding: 14px 16px; background: var(--paper); color: var(--ink); border: 2px solid var(--paper); border-radius: 4px; font: inherit; font-size: 18px; line-height: 1.3; cursor: pointer; }
+.opt::before { content: ""; flex: none; width: 20px; height: 20px; border: 2px solid var(--muted); border-radius: 50%; }
+.opt:hover { border-color: var(--orange); }
+.opt[aria-pressed="true"] { border-color: var(--orange); background: #fff; }
+.opt[aria-pressed="true"]::before { border-color: var(--orange); background: radial-gradient(circle, var(--orange) 0 45%, transparent 50%); }
+.back { margin-top: 22px; background: none; border: 0; color: var(--soft); font: inherit; font-size: 16px; text-decoration: underline; cursor: pointer; padding: 8px 0; }
+.back[hidden] { display: none; }
+
+/* Resultado */
+.score { display: flex; align-items: flex-end; gap: 14px; }
+.score .n { font-family: var(--display); font-weight: 700; font-size: clamp(96px, 26vw, 148px); line-height: .8; color: var(--orange); font-variant-numeric: tabular-nums; }
+.score .of { font-family: var(--display); font-weight: 600; font-size: 28px; letter-spacing: .06em; color: var(--soft); padding-bottom: 6px; text-transform: uppercase; }
+.card { background: var(--paper); color: var(--ink); border-radius: 4px; padding: 20px; margin-top: 22px; }
+.card h3 { color: var(--ink); margin-bottom: 14px; }
+.dim { margin-top: 14px; }
+.dim:first-of-type { margin-top: 0; }
+.dim .row { display: flex; justify-content: space-between; gap: 10px; font-weight: 600; font-size: 17px; }
+.dim .row span:last-child { font-variant-numeric: tabular-nums; }
+.track { height: 10px; background: var(--line); margin-top: 6px; }
+.track i { display: block; height: 100%; background: var(--navy); }
+.gaps { margin: 0; padding-left: 20px; }
+.gaps li { margin-top: 6px; }
+.callout { border-left: 6px solid var(--orange); background: var(--navy-2); padding: 18px 18px 18px 20px; margin-top: 22px; }
+.callout p { font-size: 19px; line-height: 1.35; font-weight: 500; }
+.verdict { margin-top: 30px; }
+.verdict p { color: var(--soft); margin-top: 14px; }
+.cta { margin-top: 26px; display: grid; gap: 12px; }
+.small { color: var(--soft); font-size: 15px; margin-top: 4px; }
+.small a { color: #fff; }
+.contact { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 6px; font-size: 16px; color: var(--soft); }
+.contact a, .contact button { color: #fff; }
+.link { background: none; border: 0; padding: 0; font: inherit; text-decoration: underline; cursor: pointer; }
+.again { margin-top: 30px; }
+@media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><span>LOZA Consulting</span><span>Autodiagnóstico</span></div>
+  <main id="app" aria-live="polite"></main>
+</div>
+
+<script src="quiz.js"></script>
+</body>
+</html>
