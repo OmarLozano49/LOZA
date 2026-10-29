@@ -25,7 +25,7 @@
       o: ["Nada formal", "El seguimiento informal de quien la lideró", "Un dueño, una reunión de revisión y una medición"] },
     { area: "b", gap: "definir quién decide qué se analiza con IA",
       q: "¿Quién decide qué se analiza con IA o con datos avanzados en tu planta?",
-      o: ["IT o un proveedor. Yo no participo", "IT propone y yo doy mi opinión", "Yo defino la pregunta de negocio y otros ejecutan"] },
+      o: ["Otra área o un proveedor. Yo no participo", "Otra área propone y yo doy mi opinión", "Yo defino la pregunta de negocio y otros ejecutan"] },
     { area: "b", gap: "usar IA con datos propios de planta",
       q: "¿Has usado IA para analizar un problema real de tu planta, sin contar redactar correos?",
       o: ["Nunca", "He probado algo, sin continuidad", "La uso con datos propios de forma regular"] },
@@ -38,6 +38,18 @@
   ];
   var MAX = Q.length * 2;
   var CUT = 14; // 0 a 14: WhatsApp. 15 a 20: correo y seguir en LinkedIn.
+  var PROFILES = [
+    { name: "Instinto de planta", max: 6,
+      text: "Decides con experiencia y olfato, y eso te ha sostenido. Los datos todavía no son un sistema que te respalde. Con una pregunta bien puesta, ese olfato se apoya en números." },
+    { name: "Datos en mano, causa pendiente", max: 14,
+      text: "Tienes datos y conoces las herramientas. La causa de tu problema principal sigue sin aparecer. Esa brecha tiene salida y se trabaja con tu caso real." },
+    { name: "Dueño de la pregunta", max: 20,
+      text: "Defines qué se analiza y validas lo que sale. Tu análisis ya es sólido." }
+  ];
+  function profileFor(total) {
+    for (var i = 0; i < PROFILES.length; i++) if (total <= PROFILES[i].max) return PROFILES[i];
+    return PROFILES[PROFILES.length - 1];
+  }
 
   // Lógica pura: puntaje, áreas y brechas.
   function compute(ans) {
@@ -52,6 +64,8 @@
     return {
       total: total, a: a, b: b,
       band: total <= CUT ? "low" : "high",
+      profile: profileFor(total).name,
+      profileText: profileFor(total).text,
       gaps: gaps.slice(0, 3).map(function (g) { return Q[g.i].gap; }),
       delegaIA: ans[6] <= 1
     };
@@ -69,11 +83,13 @@
   function h(html) { app.innerHTML = html; var t = app.querySelector("[data-focus]"); if (t) { t.setAttribute("tabindex", "-1"); t.focus({ preventScroll: true }); } window.scrollTo(0, 0); }
 
   function intro() {
-    h('<h1 data-focus>¿Qué tan listo está tu análisis de planta?</h1>' +
-      '<p class="lead">Mide cómo llegas hoy a la causa de tus problemas, qué tan confiables son tus datos y qué papel juega la IA en tu planta.</p>' +
+    h('<p class="eyebrow">IA en manufactura</p>' +
+      '<h1 data-focus>¿En cuál de estos 3 perfiles está tu planta?</h1>' +
+      '<ul class="profiles"><li>Instinto de planta</li><li>Datos en mano, causa pendiente</li><li>Dueño de la pregunta</li></ul>' +
+      '<p class="lead">Autodiagnóstico de 10 preguntas sobre cómo analizas tu planta y qué papel juega la IA. Te ubica en uno de los tres perfiles.</p>' +
       '<ul class="facts"><li>10 preguntas</li><li>Menos de 4 minutos</li><li>Resultado privado</li></ul>' +
       '<p class="privacy">Tus respuestas se quedan en tu navegador. No se guardan ni se envían a nadie.</p>' +
-      '<div class="start"><button class="btn" id="go" type="button">Empezar</button></div>' +
+      '<div class="start"><button class="btn" id="go" type="button">Descubrir mi perfil</button></div>' +
       '<p class="sign">Omar Lozano · Six Sigma Black Belt · +25 años en manufactura</p>');
     document.getElementById("go").onclick = function () { step = 0; ans = []; question(); };
   }
@@ -103,7 +119,8 @@
   function result() {
     var r = compute(ans);
     var gapText = joinEs(r.gaps);
-    var html = '<div class="score" data-focus><span class="n">' + r.total + '</span><span class="of">de ' + MAX + ' puntos</span></div>';
+    var html = '<p class="eyebrow">Tu perfil</p><h2 class="profile" data-focus>' + r.profile + '</h2><p class="lead">' + r.profileText + '</p>' +
+      '<div class="score"><span class="n">' + r.total + '</span><span class="of">de ' + MAX + ' puntos</span></div>';
 
     html += '<div class="card"><h3>Dónde estás</h3>' +
       dim(AREAS.a, r.a, 12) + dim(AREAS.b, r.b, 8);
@@ -115,23 +132,23 @@
     html += '</div>';
 
     if (r.delegaIA) {
-      html += '<div class="callout"><p>Si la IA se la dejas a IT, la pregunta que se analiza la define quien no conoce tu proceso. La pregunta de negocio es tuya.</p></div>';
+      html += '<div class="callout"><p>Un análisis con IA sirve cuando la pregunta sale de quien conoce el proceso. Esa pregunta es tuya.</p></div>';
     }
 
     if (r.band === "low") {
-      var msg = "Hola Omar, hice tu autodiagnóstico de análisis de planta. Mi puntaje fue " + r.total + " de " + MAX + ". Lo que más me pesa hoy: " + gapText + ". Quiero contarte mi caso.";
+      var msg = "Hola Omar, hice tu autodiagnóstico de IA en manufactura. Mi perfil: " + r.profile + " (" + r.total + " de " + MAX + "). Lo que más me pesa hoy: " + gapText + ". Quiero contarte mi caso.";
       var wa = "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg);
-      html += '<div class="verdict"><h2>Tienes una base y una brecha concreta.</h2>' +
-        '<p>Ya trabajas con datos y conoces las herramientas. Lo que falta es aplicarlas bien a tu problema real. Eso se resuelve trabajando sobre tu caso y tus indicadores. Cuéntame cuál es el tuyo.</p></div>' +
+      html += '<div class="verdict"><h2>Cuéntame tu caso.</h2>' +
+        '<p>Dime qué problema de planta quieres resolver primero. Lo trabajamos con tus datos y tus indicadores.</p></div>' +
         '<div class="cta"><a class="btn block" id="wa" href="' + wa + '" target="_blank" rel="noopener">Escríbeme por WhatsApp</a>' +
         '<p class="small">Se abre WhatsApp con tu resultado ya escrito. Tú decides si lo envías.</p>' +
         '<div class="contact"><span>+504 9949 4633</span></div></div>';
     } else {
-      var subj = "Autodiagnóstico de análisis de planta: " + r.total + " de " + MAX;
-      var body = "Hola Omar,\n\nHice tu autodiagnóstico y obtuve " + r.total + " de " + MAX + ". Me gustaría contrastar un caso contigo.\n\nSaludos";
+      var subj = "Autodiagnóstico de IA en manufactura: " + r.profile + " (" + r.total + " de " + MAX + ")";
+      var body = "Hola Omar,\n\nHice tu autodiagnóstico y quedé en el perfil " + r.profile + " (" + r.total + " de " + MAX + "). Me gustaría contrastar un caso contigo.\n\nSaludos";
       var mail = "mailto:" + MAIL + "?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body);
-      html += '<div class="verdict"><h2>Tu análisis de planta ya es sólido.</h2>' +
-        '<p>Tienes criterio y datos para decidir. Si quieres contrastar un caso o intercambiar ideas, escríbeme por correo. Y si te sirve lo que publico sobre problemas reales de planta, sígueme en LinkedIn.</p></div>' +
+      html += '<div class="verdict"><h2>Contrastemos un caso.</h2>' +
+        '<p>Si quieres intercambiar ideas, escríbeme por correo. Y si te sirve lo que publico sobre problemas reales de planta, sígueme en LinkedIn.</p></div>' +
         '<div class="cta"><a class="btn block" id="mail" href="' + mail + '">Escríbeme por correo</a>' +
         '<a class="btn block ghost" id="li" href="' + LI + '" target="_blank" rel="noopener">Sígueme en LinkedIn</a>' +
         '<div class="contact"><span>' + MAIL + '</span><button type="button" class="link" id="copy">Copiar correo</button></div></div>';
